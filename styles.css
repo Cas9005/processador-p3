@@ -1,0 +1,446 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 16px;
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+}
+
+.container {
+  max-width: 1450px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 2.45fr) minmax(290px, 0.95fr);
+  grid-template-areas:
+    "registos registos"
+    "controlo controlo"
+    "assembler lateral"
+    "inferior inferior"
+    "roms roms";
+  gap: 10px;
+}
+
+.box {
+  background: #dddddd;
+  border: 1px solid #333;
+  border-radius: 4px;
+}
+
+.registos {
+  grid-area: registos;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px 14px;
+  padding: 10px 12px;
+}
+
+.controlo {
+  grid-area: controlo;
+  overflow: hidden;
+}
+
+.roms {
+  grid-area: roms;
+  overflow: hidden;
+}
+
+.controlo-grade {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px 14px;
+  padding: 10px 12px;
+}
+
+.controlo-largo {
+  grid-column: span 2;
+}
+
+.roms-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 10px 10px 0;
+  flex-wrap: wrap;
+}
+
+.rom-tab {
+  min-height: 34px;
+  padding: 8px 12px;
+  border: 1px solid #333;
+  border-radius: 999px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.rom-tab.ativa {
+  background: #e8f2ff;
+  border-color: #4f86ff;
+}
+
+.roms-conteudo {
+  max-height: 360px;
+  overflow: auto;
+  padding-top: 8px;
+}
+
+.roms-nota {
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #444;
+}
+
+.tabela-rom {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 13px;
+}
+
+.tabela-rom th,
+.tabela-rom td {
+  padding: 6px 8px;
+  border: 1px solid #d7d7d7;
+  text-align: left;
+  vertical-align: top;
+}
+
+.tabela-rom th {
+  position: sticky;
+  top: 0;
+  background: #efefef;
+  z-index: 1;
+}
+
+.rom-linha.ativa {
+  background: #fff7db;
+}
+
+.tabela-rom-controle td:last-child,
+.tabela-rom-controle th:last-child {
+  min-width: 320px;
+}
+
+.linha-registo {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 6px;
+  border: 1px solid #b7b7b7;
+  border-radius: 3px;
+  background: #efefef;
+  min-width: 0;
+}
+
+.linha-registo span:last-child {
+  font-weight: bold;
+  font-family: Consolas, "Courier New", monospace;
+  letter-spacing: 0.08em;
+}
+
+.assembler {
+  grid-area: assembler;
+  height: 420px;
+  min-height: 420px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.titulo {
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.editor-assembler textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 10px;
+  resize: none;
+  overflow: auto;
+  white-space: pre;
+  font-size: 15px;
+  line-height: 1.2;
+  background: #fafafa;
+  font-family: Consolas, "Courier New", monospace;
+}
+
+.lateral {
+  grid-area: lateral;
+  display: grid;
+  grid-template-rows: 190px auto 160px;
+  gap: 10px;
+}
+
+.erros,
+.terminal {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.conteudo-erros,
+.terminal-saida {
+  flex: 1;
+  overflow: auto;
+  padding: 10px;
+  background: #fafafa;
+  border-top: 1px solid #333;
+}
+
+.conteudo-erros p,
+.conteudo-erros ul {
+  margin: 0;
+}
+
+.conteudo-erros ul {
+  padding-left: 18px;
+}
+
+.terminal-saida {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: Consolas, "Courier New", monospace;
+}
+
+.botoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-content: start;
+}
+
+.botao-falso,
+.botoes button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid #333;
+  border-radius: 999px;
+  background: #ffffff;
+  cursor: pointer;
+  text-align: center;
+}
+
+.botao-falso:hover,
+.botoes button:hover {
+  background: #f0f0f0;
+}
+
+.botao-largo {
+  grid-column: 1 / -1;
+}
+
+.zona-inferior {
+  grid-area: inferior;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: 10px;
+}
+
+.ajustavel {
+  resize: both;
+  overflow: auto;
+  min-width: 250px;
+  min-height: 150px;
+  padding: 0;
+}
+
+.painel-header {
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #333;
+  background: #d7d7d7;
+  text-align: center;
+}
+
+.painel-conteudo {
+  min-height: 95px;
+  max-height: 430px;
+  padding: 10px;
+  background: #fafafa;
+}
+
+.grade-memoria {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.celula-memoria,
+.celula-pilha {
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+  font-family: Consolas, "Courier New", monospace;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.coluna-pilha {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.celula-pilha.sp-ativo {
+  background: #e8f2ff;
+  border-color: #4f86ff;
+}
+
+.celula-pilha.sp-topo {
+  background: #edf8ee;
+  border-color: #2f8f46;
+}
+
+.celula-pilha.sp-ativo.sp-topo {
+  background: #e8f2ff;
+  border-color: #4f86ff;
+}
+
+.celula-memoria.memoria-destaque {
+  background: #fff7db;
+  border-color: #d39a00;
+}
+
+.celula-memoria.memoria-vetor {
+  background: #eef7ff;
+}
+
+.celula-memoria.memoria-io {
+  background: #eefbef;
+}
+
+.memoria-resumo,
+.pilha-resumo {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 12px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 14px;
+}
+
+.memoria-secao {
+  margin-bottom: 14px;
+}
+
+.memoria-secao-titulo {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "registos"
+      "controlo"
+      "assembler"
+      "lateral"
+      "inferior"
+      "roms";
+  }
+
+  .registos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .controlo-grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .zona-inferior {
+    grid-template-columns: 1fr;
+  }
+
+  .grade-memoria {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+.editor-assembler {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  border: 1px solid #888;
+  border-radius: 3px;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+
+.linhas-codigo {
+  margin: 0;
+  padding: 10px 8px;
+  min-width: 48px;
+  max-width: 72px;
+  height: 100%;
+  overflow: hidden;
+  white-space: pre;
+  text-align: right;
+  color: #666;
+  background: #f0f0f0;
+  border-right: 1px solid #d0d0d0;
+  font-size: 15px;
+  line-height: 1.2;
+  font-family: Consolas, "Courier New", monospace;
+  user-select: none;
+}
+
+.editor-assembler textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 10px;
+  resize: none;
+  overflow: auto;
+  white-space: pre;
+  font-size: 15px;
+  line-height: 1.2;
+  background: #fafafa;
+  font-family: Consolas, "Courier New", monospace;
+}
+
+.programa-lista {
+  overflow: auto;
+  font-family: Consolas, "Courier New", monospace;
+}
+
+.linha-programa {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 12px;
+  padding: 3px 6px;
+  border-bottom: 1px solid #ececec;
+}
+
+.linha-programa.ativa {
+  background: #fff7db;
+}
+
+.endereco-programa {
+  color: #6b6b6b;
+}
+
+.texto-programa {
+  color: #222;
+}

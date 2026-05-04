@@ -1,0 +1,13 @@
+TERM_WRITE EQU FFFEh
+
+ORIG 0000h
+
+Inicio:
+    MOV R1, 'O'
+    MOV M[TERM_WRITE], R1
+
+    MOV R1, 'K'
+    MOV M[TERM_WRITE], R1
+
+Fim:
+    NOP
