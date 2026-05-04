@@ -73,23 +73,44 @@ function atualizarNumerosLinha() {
     atualizarInterface(state.cpu);
     mostrarErros(["Simulador reiniciado."]);
   }
+function definirIntervaloPilha() {
+  const atual = `${formatarPalavra(state.pilhaInicio)}-${formatarPalavra(state.pilhaFim)}`;
+  const resposta = prompt("O formato do intervalo da pilha é xxxx-xxxx:", atual);
 
-  function definirTamanhoPilha() {
-    const maximo = P3_DEFAULT_STACK_BASE - P3_RAM_START + 1;
-    const resposta = prompt("Novo tamanho da pilha:", String(state.tamanhoPilha));
-    if (resposta === null) return;
+  if (resposta === null) return;
 
-    const valor = Number(resposta.trim());
-    if (!Number.isInteger(valor) || valor <= 0 || valor > maximo) {
-      alert(`Indica um número inteiro maior do que zero e até ${maximo}.`);
-      return;
-    }
+  const texto = resposta.trim();
 
-    state.tamanhoPilha = valor;
-    state.cpu.setStackSize(state.tamanhoPilha);
-    atualizarInterface(state.cpu);
-    mostrarErros([`Tamanho da pilha definido para ${state.tamanhoPilha}.`]);
+  const match = texto.match(/^([0-9A-Fa-f]{4})-([0-9A-Fa-f]{4})$/);
+
+  if (!match) {
+    alert("Formato inválido. Usa apenas o formato xxxx-xxxx.");
+    return;
   }
+
+  const inicio = parseInt(match[1], 16);
+  const fim = parseInt(match[2], 16);
+
+  if (inicio > fim) {
+    alert("O endereço inicial não pode ser maior do que o endereço final.");
+    return;
+  }
+
+  if (inicio < P3_RAM_START || fim > P3_RAM_END) {
+    alert(`A pilha tem de estar dentro da RAM: ${formatarPalavra(P3_RAM_START)}-${formatarPalavra(P3_RAM_END)}.`);
+    return;
+  }
+
+  state.pilhaInicio = inicio;
+  state.pilhaFim = fim;
+
+  state.cpu.setStackRange(state.pilhaInicio, state.pilhaFim);
+  atualizarInterface(state.cpu);
+
+  mostrarErros([
+    `Intervalo da pilha definido para ${formatarPalavra(inicio)}-${formatarPalavra(fim)}.`
+  ]);
+}
 
   window.P3AppControls = {
     executarPasso,
@@ -97,6 +118,6 @@ function atualizarNumerosLinha() {
     sincronizarScrollLinhas,
     executarTudo,
     resetSimulador,
-    definirTamanhoPilha
+    definirIntervaloPilha
   };
 })();

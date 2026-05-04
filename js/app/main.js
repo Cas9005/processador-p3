@@ -7,7 +7,7 @@
     executarTudo,
     executarPasso,
     resetSimulador,
-    definirTamanhoPilha,
+    definirIntervaloPilha,
     atualizarNumerosLinha,
     sincronizarScrollLinhas
   } = window.P3AppControls;
@@ -22,7 +22,7 @@
     document.getElementById("btnRun").addEventListener("click", executarTudo);
     document.getElementById("btnPasso").addEventListener("click", executarPasso);
     document.getElementById("btnReset").addEventListener("click", resetSimulador);
-    document.getElementById("btnPilha").addEventListener("click", definirTamanhoPilha);
+    document.getElementById("btnPilha").addEventListener("click", definirIntervaloPilha);
 
     const areaCodigo = document.getElementById("codigo");
     areaCodigo.addEventListener("input", atualizarNumerosLinha);
