@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROMs do Simulador P3</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container container-roms">
+    <section class="box acoes-topo">
+      <a class="acao-topo-link" href="index.html">Simulador</a>
+      <a class="acao-topo-link" href="tutorial.hmtl">Tutorial</a>
+      <a class="acao-topo-link" href="about.html">About</a>
+    </section>
+
+    <section class="box roms">
+      <div class="painel-header">ROMs da Unidade de Controlo</div>
+      <div class="roms-tabs" id="romsTabs">
+        <button type="button" class="rom-tab ativa" data-rom-tab="roma">ROM A</button>
+        <button type="button" class="rom-tab" data-rom-tab="romb">ROM B</button>
+        <button type="button" class="rom-tab" data-rom-tab="control">ROM de Controlo</button>
+      </div>
+      <div class="painel-conteudo roms-conteudo" id="romsConteudo"></div>
+    </section>
+  </div>
+
+  <script src="js/memoria.js"></script>
+  <script src="js/parsing.js"></script>
+  <script src="js/cpu/registers.js"></script>
+  <script src="js/cpu/alu.js"></script>
+  <script src="js/cpu/instruction-set.js"></script>
+  <script src="js/cpu/roms.js"></script>
+  <script src="js/cpu/control-unit.js"></script>
+  <script src="js/cpu/cpu.js"></script>
+  <script src="js/ui/mensagens.js"></script>
+  <script src="js/ui/render-roms.js"></script>
+  <script src="js/app/estado.js"></script>
+  <script>
+    (function () {
+      const { P3_MEMORY_SIZE } = window.P3Memoria;
+      const { CPU } = window.P3CPU;
+      const state = window.P3AppState || (window.P3AppState = {});
+
+      function iniciarPaginaRoms() {
+        state.cpu = new CPU(P3_MEMORY_SIZE, state.tamanhoPilha || 256);
+        window.P3UI.atualizarRoms(state.cpu);
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", iniciarPaginaRoms);
+      } else {
+        iniciarPaginaRoms();
+      }
+    })();
+  </script>
+</body>
+</html>
