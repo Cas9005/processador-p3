@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador P3-documentação</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<p>nesta seçao vamos apresentar tudos os comandos utilizados pelo processador p3com uma breve discrições e os flags que sáo afetados pelos comandos</p>
+<h1>comandos sem argumentos</h1>
+<p>NOP → apenas aumenta um cilo de relogio</p>
+<p>ENI → ativa interrupções (E)</p>
+<p>DSI → desativa interrupções (E)</p>
+<p>STC → coloca Carry = 1 (C)</p>
+<p>CLC → coloca Carry = 0 (C)</p>
+<p>CMC → inverte Carry (C)</p>
+<p>RET → retorna de subrotina</p>
+<p>RTI → retorna de interrupção (E Z C N O) </p><br>
+
+<h1>comandos com constante</h1>
+<p>INT (constante) → gera interrupção n (E Z C N O – limpa)</p>
+<p>RETN (consante) → retorna e limpa n valores da pilha</p><br>
+<h1>comandos com 1 argumento</h1>
+<p>NEG (registo / memória)→ muda sinal (Z C N O)</p>
+<p>INC (registo / memória) → incrementa (Z C N O)</p>
+<p>DEC (registo / memória)→ decrementa (Z C N O)</p>
+<p>COM (registo / memória)→ NOT  (Z N)</p>
+<p>PUSH (registo / memória / constante)→ mete na pilha </p>
+<p>POP (registo / memória)→ retira da pilha </p><br>
+
+<h2>shifts e rotações</h2>
+<p>SHR (registo/memória), (constante)→ shift direita  (Z C N)</p>
+<p>SHL (registo/memória), (constante) → shift esquerda (Z C N)</p>
+<p>SHRA (registo/memória), (constante)→ shift direita com sinal  (Z C N O)</p>
+<p>SHLA (registo/memória), (constante)→ shift esquerda com overflow  (Z C N O)</p>
+<p>ROR (registo/memória), (constante)→ roda direita  (Z C N)</p>
+<p>ROL (registo/memória), (constante)→ roda esquerda  (Z C N)</p>
+<p>RORC (registo/memória), (constante)→ roda direita com carry  (Z C N)</p><br>
+
+<h1>comandos com 2 argumentos</h1>
+<h2>Aritméticas e lógicas</h2>
+<p>ADD (registo / memória), (registo/memória/constante)→ soma  (Z C N O)</p>
+<p>ADDC (registo / memória), (registo/memória/constante) → soma com carry  (Z C N O)</p>
+<p>SUB (registo / memória), (registo/memória/constante) → subtrai  (Z C N O)</p>
+<p>SUBB(registo / memória), (registo/memória/constante)  → subtrai com borrow  (Z C N O)</p>
+<p>MUL (registo ), (registo/memória)→ multiplica  (Z)</p>
+<p>DIV (registo ), (registo/memória)→ divide  (Z O)</p>
+<p>CMP (registo/memória), (registo/memória/constante)→ compara   (Z C N O)</p>
+<p>TEST (registo/memória), (registo/memória/constante)→ AND só para flags  (Z N)</p>
+<p>AND (registo), (registo/memória/constante)→ E lógico  (Z N)</p>
+<p>OR(registo), (registo/memória/constante) → OU lógico  (Z N)</p>
+<p>XOR (registo), (registo/memória/constante)→ OU exclusivo  (Z N)</p>
+<p>MOV (registo/memória/SP), (registo/memória/constante/SP)→ copia valor </p>
+<p><MVBH (registo), (registo/memória/constante) → move byte alto  <p>
+<p>MVBL (registo), (registo/memória/constante)→ move byte baixo</p>
+<p>XCH (registo), (registo/memória/constante)→ troca valores</p><br>
+
+<h1>saltos </h1>
+<p>JMP (label/registo/memória/PC)→ salto absoluto </p>
+<p>CALL (label/registo/memória/PC) → chama subrotina </p>
+<p>BR (constante/label offset)→ salto relativo </p>
+<p>JMP.cond (label/registo/memória/PC)→ salta se condição </p>
+<p>CALL.cond (label/registo/memória/PC)→ chama se condição </p>
+<p>br.cond (constante/label offset) → salto relativo condicional </p>
+
+<h1>pseudo-instruções</h1>
+<p>ORIG (constante)→ define endereço </p>
+<p>EQU (constante)→ define constante </p>
+<p>WORD (constante)→ guarda valor </p>
+<p>STR (string)→ guarda string </p>
+<p>TAB (constante)→ reserva espaço </p>
+<br><br><br>
+<p>além dos comandos existe tambem as condiçoesmencionadas nos comnados em cima como cond, sendo estas aplicadas sobre as flags</p>
+
+<h1>condições</h1>
+<p>Z / NZ → zero → (Z) </p>
+<p>C / NC → carry → (C)</p>
+<p>N / NN → negativo → (N) </p>
+<p>O / NO → overflow → (O) </p>
+<p>P / NP → positivo → (Z,N) </p>
+<p>I / NI → interrupções → (E) </p>
+</body>
+</html>

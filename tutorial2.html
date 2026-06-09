@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador P3-tuturial</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="container tutorial-container">
+
+
+<section class="box acoes-topo">
+<a class="acao-topo-link" href="index.html">voltar a pagina principal</a>
+<a class="acao-topo-link" href="tutorial1.html">pagina anterior</a>
+<a class="acao-topo-link" href="tutorial3.html">proxima pagina </a>
+
+</section>
+
+
+<header class="box registos">
+      <div class="linha-registo"><span>r0 =</span><span id="r0g"></span></div>
+      <div class="linha-registo"><span>r1 =</span><span id="r1g"></span></div>
+      <div class="linha-registo"><span>r2 =</span><span id="r2g"></span></div>
+      <div class="linha-registo"><span>r3 =</span><span id="r3g"></span></div>
+      <div class="linha-registo"><span>r4 =</span><span id="r4g"></span></div>
+      <div class="linha-registo"><span>r5 =</span><span id="r5g"></span></div>
+      <div class="linha-registo"><span>r6 =</span><span id="r6g"></span></div>
+      <div class="linha-registo"><span>r7 =</span><span id="r7g"></span></div>
+      <div class="linha-registo"><span>sp =</span><span id="spg"></span></div>
+      <div class="linha-registo"><span>pc =</span><span id="pcg"></span></div>
+      <div class="linha-registo"><span>E =</span><span id="eg"></span></div>
+      <div class="linha-registo"><span>Z =</span><span id="zg"></span></div>
+      <div class="linha-registo"><span>C =</span><span id="cg"></span></div>
+      <div class="linha-registo"><span>N =</span><span id="ng"></span></div>
+      <div class="linha-registo"><span>O =</span><span id="og"></span></div>
+    </header>
+
+
+
+<main class="box assembler">
+      <label for="codigo" class="titulo">Assembler</label>
+      <div class="editor-assembler">
+        <pre id="linhasCodigo" class="linhas-codigo">1</pre>
+<textarea id="codigo" spellcheck="false" wrap="off" readonly>
+; esta parte do tutorial e acerca dos shifts e das rotacoes
+; cada algarismo hexadecimal corresponde a 4 bits em binario
+
+MOV R1, 0002h    ; 0000 0000 0000 0010b
+MOV R2, 0010h    ; 0000 0000 0001 0000b
+MOV R3, FFFFh    ; 1111 1111 1111 1111b
+MOV R4, 0001h    ; 0000 0000 0000 0001b
+
+SHR R1, 1        ; direita: 0002h -> 0001h
+SHL R1, 1        ; esquerda: 0001h -> 0002h
+SHRA R3, 1       ; direita aritmetica: mantem o bit de sinal
+SHLA R3, 1       ; esquerda aritmetica: atualiza o overflow
+ROR R4, 1        ; roda para a direita
+ROL R4, 1        ; roda para a esquerda
+RORC R2, 1       ; roda para a direita usando o carry
+ROLC R2, 1       ; roda para a esquerda usando o carry
+       </textarea>
+      </div>
+    </main>
+
+    <aside class="lateral">
+<section class="botoes">
+
+<button type="button" id="btnPasso">Passo a passo</button>
+<button type="button" id="btnReset">Reset</button>
+
+</section>
+    </aside>
+</div>
+
+ <script src="js/memoria.js"></script>
+ <script src="js/parsing.js"></script>
+
+
+  <script src="js/cpu/registers.js"></script>
+  <script src="js/cpu/alu.js"></script>
+  <script src="js/cpu/instruction-set.js"></script>
+  <script src="js/cpu/roms.js"></script>
+  <script src="js/cpu/control-unit.js"></script>
+  <script src="js/cpu/cpu.js"></script>
+
+  <script src="js/ui/mensagens.js"></script>
+  <script src="js/ui/render-registos.js"></script>
+  <script src="js/ui/render-controlo.js"></script>
+  <script src="js/ui/render-roms.js"></script>
+  <script src="js/ui/render-memoria.js"></script>
+  <script src="js/ui/render-pilha.js"></script>
+  <script src="js/ui/render-terminal.js"></script>
+  <script src="js/ui/render-programa.js"></script>
+  <script src="js/ui/render-geral.js"></script>
+
+  <script src="js/app/estado.js"></script>
+  <script src="js/app/assembler-actions.js"></script>
+  <script src="js/app/controls.js"></script>
+  <script src="js/app/main.js"></script>
+  <script src="js/tutorial/tutorial2.js"></script>
+</body>
+</html>
