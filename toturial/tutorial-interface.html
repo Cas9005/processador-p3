@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial da interface - Simulador P3</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    body {
+      padding: 0;
+    }
+
+    .tutorial-page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .tutorial-hero {
+      padding: 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .tutorial-hero h1,
+    .tutorial-section h2,
+    .tutorial-card h3 {
+      margin: 0;
+    }
+
+    .tutorial-hero p,
+    .tutorial-card p,
+    .tutorial-note p {
+      margin: 0;
+      color: var(--texto-suave);
+      line-height: 1.45;
+    }
+
+    .tutorial-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tutorial-section {
+      display: grid;
+      gap: 10px;
+    }
+
+    .tutorial-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .tutorial-card {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .tutorial-card-wide {
+      grid-column: 1 / -1;
+    }
+
+    .tutorial-card h3 {
+      font-size: 17px;
+    }
+
+    .tutorial-mini {
+      border: 1px solid var(--borda-suave);
+      border-radius: var(--raio-pequeno);
+      background: var(--fundo-superficie);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+      overflow: auto;
+    }
+
+    .tutorial-mini-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .tutorial-pill,
+    .tutorial-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 6px 11px;
+      border: 1px solid var(--borda-forte);
+      border-radius: var(--raio-pill);
+      background: var(--fundo-controlo);
+      color: var(--texto);
+      font-size: 13px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .tutorial-button {
+      min-width: 118px;
+      min-height: 36px;
+      font-weight: normal;
+    }
+
+    .tutorial-button-wide {
+      min-width: 250px;
+    }
+
+    .tutorial-register-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .tutorial-terminal {
+      min-height: 96px;
+      padding: 10px;
+      border: 1px solid var(--borda-suave);
+      background: #121416;
+      color: #74f28a;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+    }
+
+    .tutorial-bits {
+      display: grid;
+      gap: 6px;
+    }
+
+    .tutorial-bit-line {
+      display: grid;
+      grid-template-columns: 46px repeat(16, 18px);
+      gap: 4px;
+      align-items: center;
+      min-width: 370px;
+    }
+
+    .tutorial-bit-label,
+    .tutorial-code {
+      font-family: Consolas, "Courier New", monospace;
+      color: var(--texto-muted);
+    }
+
+    .tutorial-dot {
+      width: 13px;
+      height: 13px;
+      border: 1px solid var(--borda);
+      border-radius: var(--raio-pill);
+      background: #151719;
+      justify-self: center;
+    }
+
+    .tutorial-dot.on {
+      border-color: #2f9b57;
+      background: var(--sucesso);
+      box-shadow: 0 0 8px rgba(79, 195, 118, 0.7);
+    }
+
+    .tutorial-switch {
+      width: 18px;
+      height: 13px;
+      border: 1px solid var(--borda-forte);
+      border-radius: var(--raio-pill);
+      background: #191b1f;
+      justify-self: center;
+    }
+
+    .tutorial-switch.on {
+      background: var(--fundo-ativo);
+      border-color: var(--foco);
+    }
+
+    .tutorial-display-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 8px;
+    }
+
+    .tutorial-display {
+      display: grid;
+      justify-items: center;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid var(--borda-suave);
+      border-radius: var(--raio-pequeno);
+      background: var(--fundo-superficie-2);
+    }
+
+    .tutorial-seven {
+      position: relative;
+      width: 54px;
+      height: 86px;
+      border: 1px solid var(--borda);
+      border-radius: var(--raio-pequeno);
+      background: #151719;
+    }
+
+    .tutorial-seg {
+      position: absolute;
+      border-radius: 999px;
+      background: #363b43;
+    }
+
+    .tutorial-seg.on {
+      background: var(--perigo);
+      box-shadow: 0 0 8px rgba(208, 79, 79, 0.65);
+    }
+
+    .s-a,
+    .s-d,
+    .s-g {
+      left: 13px;
+      width: 28px;
+      height: 6px;
+    }
+
+    .s-a {
+      top: 8px;
+    }
+
+    .s-g {
+      top: 40px;
+    }
+
+    .s-d {
+      bottom: 8px;
+    }
+
+    .s-b,
+    .s-c,
+    .s-e,
+    .s-f {
+      width: 6px;
+      height: 27px;
+    }
+
+    .s-b,
+    .s-c {
+      right: 8px;
+    }
+
+    .s-e,
+    .s-f {
+      left: 8px;
+    }
+
+    .s-b,
+    .s-f {
+      top: 16px;
+    }
+
+    .s-c,
+    .s-e {
+      top: 47px;
+    }
+
+    .tutorial-steps {
+      counter-reset: passos;
+      display: grid;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .tutorial-steps li {
+      counter-increment: passos;
+      padding: 10px;
+      border: 1px solid var(--borda-suave);
+      border-radius: var(--raio-pequeno);
+      background: var(--fundo-superficie-2);
+      color: var(--texto-suave);
+      line-height: 1.4;
+    }
+
+    .tutorial-steps li::before {
+      content: counter(passos) ". ";
+      color: var(--texto);
+      font-weight: bold;
+    }
+
+    .tutorial-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+    }
+
+    .tutorial-table th,
+    .tutorial-table td {
+      padding: 9px;
+      border: 1px solid var(--borda-suave);
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.4;
+    }
+
+    .tutorial-table th {
+      background: var(--fundo-painel-2);
+    }
+
+    .tutorial-table td {
+      color: var(--texto-suave);
+    }
+
+    .tutorial-code-block {
+      margin: 0;
+      padding: 10px;
+      border: 1px solid var(--borda-suave);
+      border-radius: var(--raio-pequeno);
+      background: var(--fundo-superficie);
+      color: var(--texto);
+      font-family: Consolas, "Courier New", monospace;
+      overflow: auto;
+    }
+
+    .tutorial-screenshot {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--borda-suave);
+      border-radius: var(--raio-pequeno);
+      background: var(--fundo-painel);
+    }
+
+    .tutorial-screenshot-small {
+      width: min(100%, 360px);
+    }
+
+    .tutorial-color-legend {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .tutorial-color-item {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      min-width: 0;
+      padding: 8px;
+      border: 1px solid var(--borda-suave);
+      border-radius: var(--raio-pequeno);
+      background: var(--fundo-superficie-2);
+      color: var(--texto-suave);
+      line-height: 1.35;
+    }
+
+    .tutorial-swatch {
+      width: 24px;
+      height: 18px;
+      border: 1px solid var(--borda-forte);
+      border-radius: 5px;
+      flex: 0 0 auto;
+      background: var(--fundo-superficie);
+    }
+
+    .tutorial-swatch-normal {
+      background: var(--fundo-superficie);
+    }
+
+    .tutorial-swatch-read {
+      background: rgba(250, 204, 21, 0.28);
+      border-color: #ca8a04;
+    }
+
+    .tutorial-swatch-write {
+      background: rgba(2, 132, 199, 0.16);
+      border-color: #0284c7;
+    }
+
+    .tutorial-swatch-active {
+      background: var(--destaque-suave);
+      border-color: var(--destaque);
+    }
+
+    .tutorial-swatch-written {
+      color: var(--terminal);
+      border-color: var(--terminal);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .tutorial-swatch-breakpoint {
+      width: 18px;
+      height: 18px;
+      border-color: #ef4444;
+      border-radius: var(--raio-pill);
+      background: var(--perigo);
+    }
+
+    .tutorial-swatch-breakpoint-permanente {
+      width: 18px;
+      height: 18px;
+      border-color: var(--destaque);
+      border-radius: var(--raio-pill);
+      background: var(--destaque);
+    }
+
+    .tutorial-swatch-breakpoint-row {
+      background: var(--perigo-suave);
+      border-color: var(--perigo);
+    }
+
+    .tutorial-swatch-breakpoint-row-permanente {
+      background: var(--destaque-suave);
+      border-color: var(--destaque);
+    }
+
+    .tutorial-note {
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .tutorial-dialog-preview {
+      max-width: 360px;
+      border: 1px solid var(--borda);
+      border-radius: var(--raio-painel);
+      background: var(--fundo-painel);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.14);
+      overflow: hidden;
+    }
+
+    .tutorial-dialog-wide {
+      max-width: 520px;
+    }
+
+    .tutorial-dialog-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--borda-suave);
+      background: var(--fundo-painel-2);
+      font-weight: bold;
+    }
+
+    .tutorial-dialog-close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--borda-forte);
+      border-radius: var(--raio-pill);
+      background: var(--fundo-controlo);
+      color: var(--texto);
+      line-height: 1;
+    }
+
+    .tutorial-dialog-body {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .tutorial-dialog-field,
+    .tutorial-dialog-check {
+      display: grid;
+      gap: 6px;
+      color: var(--texto-suave);
+      font-size: 14px;
+    }
+
+    .tutorial-dialog-input {
+      min-height: 34px;
+      padding: 7px 9px;
+      border: 1px solid var(--borda-forte);
+      border-radius: var(--raio-pequeno);
+      background: var(--fundo-superficie);
+      color: var(--texto);
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    .tutorial-dialog-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tutorial-dialog-checkbox {
+      width: 17px;
+      height: 17px;
+      border: 1px solid var(--foco);
+      border-radius: 4px;
+      background: var(--destaque-suave);
+      position: relative;
+    }
+
+    .tutorial-dialog-checkbox::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 2px;
+      width: 4px;
+      height: 8px;
+      border: solid var(--foco);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .tutorial-dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding-top: 2px;
+    }
+
+    .tutorial-dialog-action {
+      min-width: 76px;
+      padding: 7px 10px;
+      border: 1px solid var(--borda-forte);
+      border-radius: var(--raio-pequeno);
+      background: var(--fundo-controlo);
+      color: var(--texto);
+      text-align: center;
+    }
+
+    .tutorial-program-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .tutorial-program-option {
+      display: block;
+      padding: 9px 10px;
+      border: 1px solid var(--borda-forte);
+      border-radius: var(--raio-pequeno);
+      background: var(--fundo-superficie);
+      color: var(--texto);
+      font-weight: bold;
+    }
+
+    @media (max-width: 850px) {
+      .tutorial-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tutorial-register-grid,
+      .tutorial-display-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .tutorial-page {
+        padding: 10px;
+      }
+
+      .tutorial-register-grid,
+      .tutorial-display-row,
+      .tutorial-color-legend {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="tutorial-page">
+    <section class="box tutorial-hero">
+      <div class="tutorial-nav">
+        <a class="acao-topo-link" href="../index.html">Voltar ao simulador</a>
+        <a class="acao-topo-link" href="../tutorial.html">Tutorial comandos</a>
+        <a class="acao-topo-link" href="../documentacao.html">Documentacao</a>
+      </div>
+      <h1>Tutorial da interface do simulador P3</h1>
+      <p>
+        Esta pagina explica as principais partes do site: botoes, editor, registos,
+        unidade de controlo, terminal, memoria, pilha, E/S e displays.
+        Serve como guia rapido para perceber onde esta cada funcao e como usar o simulador.
+      </p>
+    </section>
+
+    <section class="tutorial-section">
+      <h2>Fluxo principal</h2>
+      <ol class="tutorial-steps">
+        <li>Escrever ou importar um programa assembly no painel <strong>Assembler</strong>.</li>
+        <li>Carregar em <strong>Assemble</strong> para montar o codigo e validar erros.</li>
+        <li>Executar com <strong>Passo a passo</strong> para observar cada instrucao ou com <strong>Run</strong> para executar automaticamente.</li>
+        <li>Observar registos, memoria, programa, pilha, terminal e dispositivos de entrada/saida.</li>
+        <li>Usar <strong>Reset</strong> para voltar ao estado inicial antes de testar outro programa.</li>
+      </ol>
+    </section>
+
+    <section class="tutorial-section">
+      <h2>Botoes de visibilidade</h2>
+      <div class="tutorial-grid">
+        <article class="box tutorial-card">
+          <h3>Botoes no topo do editor</h3>
+          <div class="tutorial-mini">
+            <div class="tutorial-mini-row">
+              <span class="tutorial-pill">UC</span>
+              <span class="tutorial-pill">Terminal</span>
+              <span class="tutorial-pill">E/S</span>
+              <span class="tutorial-pill">7SEG</span>
+            </div>
+          </div>
+          <p>
+            Estes botoes mostram ou escondem paineis da interface. Sao uteis para deixar
+            mais espaco livre quando se esta a escrever codigo ou quando so se quer analisar
+            uma parte especifica do simulador.
+          </p>
+        </article>
+
+        <article class="box tutorial-card">
+          <h3>O que cada botao faz</h3>
+          <table class="tutorial-table">
+            <thead>
+              <tr>
+                <th>Botao</th>
+                <th>Funcao</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>UC</strong></td>
+                <td>Mostra ou esconde a Unidade de controlo.</td>
+              </tr>
+              <tr>
+                <td><strong>Terminal</strong></td>
+                <td>Alterna a visibilidade do terminal lateral e do ecra maior.</td>
+              </tr>
+              <tr>
+                <td><strong>E/S</strong></td>
+                <td>Mostra ou esconde os dispositivos mapeados nos enderecos FFF8h e FFF9h.</td>
+              </tr>
+              <tr>
+                <td><strong>7SEG</strong></td>
+                <td>Mostra os quatro displays de 7 segmentos. No arranque ficam escondidos e aparecem depois de carregar no botao.</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </section>
+
+    <section class="tutorial-section">
+      <h2>Botoes principais</h2>
+      <div class="tutorial-grid">
+        <article class="box tutorial-card">
+          <h3>Painel de acoes</h3>
+          <div class="tutorial-mini">
+            <div class="tutorial-mini-row">
+              <span class="tutorial-button">Import</span>
+              <span class="tutorial-button">Export</span>
+              <span class="tutorial-button">Assemble</span>
+              <span class="tutorial-button">Run</span>
+              <span class="tutorial-button">Passo a passo</span>
+              <span class="tutorial-button">Reset</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="box tutorial-card">
+          <h3>Barra do assembler</h3>
+          <p>
+            Por baixo do editor ficam os botoes para ajustar a memoria, ajustar a pilha
+            e abrir a lista de programas predefinidos.
+          </p>
+          <div class="tutorial-mini">
+            <div class="tutorial-mini-row">
+              <span class="tutorial-button tutorial-button-wide">Memoria</span>
+              <span class="tutorial-button tutorial-button-wide">Pilha</span>
+              <span class="tutorial-button tutorial-button-wide">Programas predefinidos</span>
+            </div>
+          </div>
+          <p>
+            O botao <strong>Programas predefinidos</strong> nao executa nada sozinho:
+            apenas abre uma lista para escolher o exemplo pretendido.
+          </p>
+          <div class="tutorial-dialog-preview tutorial-dialog-wide" role="img" aria-label="Lista simples de programas predefinidos">
+            <div class="tutorial-dialog-body">
+              <div class="tutorial-program-list">
+                <span class="tutorial-program-option">Moldura terminal</span>
+                <span class="tutorial-program-option">Tabela DIV memoria</span>
+                <span class="tutorial-program-option">Pilha LEDs terminal</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="box tutorial-card">
+          <h3>Funcoes dos botoes</h3>
+          <table class="tutorial-table">
+            <thead>
+              <tr>
+                <th>Botao</th>
+                <th>Explicacao</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Import</strong></td>
+                <td>Carrega um ficheiro assembly `.as` para o editor.</td>
+              </tr>
+              <tr>
+                <td><strong>Export</strong></td>
+                <td>Guarda o codigo escrito no editor num ficheiro `.as`.</td>
+              </tr>
+              <tr>
+                <td><strong>Assemble</strong></td>
+                <td>Faz o parsing do codigo, valida erros e carrega o programa na memoria.</td>
+              </tr>
+              <tr>
+                <td><strong>Run</strong></td>
+                <td>Executa o programa automaticamente ate terminar, encontrar erro, ser pausado ou parar num breakpoint.</td>
+              </tr>
+              <tr>
+                <td><strong>Passo a passo</strong></td>
+                <td>Executa apenas uma instrucao de cada vez. E o modo ideal para aprender.</td>
+              </tr>
+              <tr>
+                <td><strong>Reset</strong></td>
+                <td>Limpa o estado da CPU, memoria, terminal, LEDs e displays.</td>
+              </tr>
+              <tr>
+                <td><strong>Memoria</strong></td>
+                <td>Permite escolher a zona principal de memoria mostrada no painel. Fica por baixo do assembler.</td>
+              </tr>
+              <tr>
+                <td><strong>Pilha</strong></td>
+                <td>Permite definir o intervalo usado pela pilha. Fica por baixo do assembler.</td>
+              </tr>
+              <tr>
+                <td><strong>Programas predefinidos</strong></td>
+                <td>Abre apenas uma lista de exemplos. O codigo so entra no editor depois de escolher um programa da lista.</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </section>
+
+    <section class="tutorial-section">
+      <h2>Editor, erros e programa</h2>
+      <div class="tutorial-grid">
+        <article class="box tutorial-card">
+          <h3>Assembler</h3>
+          <p>
+            E a zona onde se escreve o programa em assembly P3. O simulador mostra os numeros
+            das linhas do lado esquerdo para facilitar a leitura dos erros.
+          </p>
+          <pre class="tutorial-code-block">ORIG 0000h
+MOV R1, 003Fh
+MOV M[FFF0h], R1
+NOP</pre>
+        </article>
+
+        <article class="box tutorial-card">
+          <h3>Monitor</h3>
+          <p>
+            Mostra mensagens do assembler ou da execucao. Se existir uma instrucao mal escrita,
+            um simbolo desconhecido ou um operando invalido, a explicacao aparece neste painel.
+          </p>
+          <div class="tutorial-mini">
+            <div class="conteudo-erros">Sem erros.</div>
+          </div>
+        </article>
+
+        <article class="box tutorial-card">
+          <h3>Programa</h3>
+          <p>
+            Mostra a listagem das instrucoes ja montadas. A linha ativa corresponde ao endereco
+            apontado pelo <strong>PC</strong>. Os pequenos circulos permitem marcar breakpoints.
+          </p>
+        </article>
+
+        <article class="box tutorial-card tutorial-card-wide">
+          <h3>Breakpoints</h3>
+          <img
+            class="tutorial-screenshot"
+            src="imagens/breakpoint.png"
+            alt="Painel Programa com uma linha ativa e um breakpoint marcado"
+          />
+          <p>
+            No painel <strong>Programa</strong>, o circulo cinzento indica uma linha sem
+            breakpoint. Ao clicar no circulo, ele fica vermelho e a linha passa a ficar
+            marcada como ponto de quebra temporario. Se clicares uma segunda vez, o circulo
+            fica azul e passa a ser um breakpoint permanente. Ao clicar novamente num
+            breakpoint permanente, ele e removido.
+          </p>
+          <p>
+            Durante o <strong>Run</strong>, quando o PC chega a uma instrucao marcada,
+            a simulacao para nesse endereco. Se o breakpoint for temporario, ao continuar
+            com <strong>Run</strong> ou <strong>Passo a passo</strong> ele desaparece e a
+            execucao nao volta a parar nesse ponto. Se for permanente, continua ativo e
+            volta a parar sempre que o programa passar por essa instrucao.
+          </p>
+          <div class="tutorial-color-legend">
+            <div class="tutorial-color-item">
+              <span class="tutorial-swatch tutorial-swatch-normal"></span>
+              <span>Circulo claro: instrucao sem ponto de quebra.</span>
+            </div>
+            <div class="tutorial-color-item">
+              <span class="tutorial-swatch tutorial-swatch-breakpoint"></span>
+              <span>Circulo vermelho: breakpoint temporario nessa instrucao.</span>
+            </div>
+            <div class="tutorial-color-item">
+              <span class="tutorial-swatch tutorial-swatch-breakpoint-permanente"></span>
+              <span>Circulo azul: breakpoint permanente nessa instrucao.</span>
+            </div>
+            <div class="tutorial-color-item">
+              <span class="tutorial-swatch tutorial-swatch-active"></span>
+              <span>Linha azul: instrucao atualmente apontada pelo PC.</span>
+            </div>
+            <div class="tutorial-color-item">
+              <span class="tutorial-swatch tutorial-swatch-breakpoint-row"></span>
+              <span>Linha rosada: instrucao marcada com breakpoint temporario.</span>
+            </div>
+            <div class="tutorial-color-item">
+              <span class="tutorial-swatch tutorial-swatch-breakpoint-row-permanente"></span>
+              <span>Linha azul clara: instrucao marcada com breakpoint permanente.</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="tutorial-section">
+      <h2>Registos e unidade de controlo</h2>
+      <div class="tutorial-grid">
+        <article class="box tutorial-card">
+          <h3>Registos principais</h3>
+          <div class="tutorial-mini tutorial-register-grid">
+            <div class="linha-registo"><span>r0 =</span><span>0000</span></div>
+            <div class="linha-registo"><span>r1 =</span><span>0000</span></div>
+            <div class="linha-registo"><span>r2 =</span><span>0000</span></div>
+            <div class="linha-registo"><span>sp =</span><span>FDFF</span></div>
+            <div class="linha-registo"><span>pc =</span><span>0000</span></div>
+            <div class="linha-registo"><span>Z =</span><span>0</span></div>
+          </div>
+          <p>
+            Os registos `r0` a `r7` guardam valores usados pelas instrucoes. O `sp` aponta para
+            a pilha e o `pc` aponta para a proxima instrucao a executar.
+          </p>
+        </article>
+
+        <article class="box tutorial-card">
+          <h3>Flags</h3>
+          <table class="tutorial-table">
+            <thead>
+              <tr>
+                <th>Flag</th>
+                <th>Significado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>E</strong></td>
+                <td>Estado relacionado com interrupcoes.</td>
+              </tr>
+              <tr>
+                <td><strong>Z</strong></td>
+                <td>Fica ativa quando o resultado e zero.</td>
+              </tr>
+              <tr>
+                <td><strong>C</strong></td>
+                <td>Indica carry ou emprestimo em operacoes aritmeticas.</td>
+              </tr>
+              <tr>
+                <td><strong>N</strong></td>
+                <td>Indica resultado negativo em representacao de 16 bits.</td>
+              </tr>
+              <tr>
+                <td><strong>O</strong></td>
+                <td>Indica overflow.</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="box tutorial-card">
+          <h3>Unidade de controlo</h3>
+          <p>
+            Mostra os registos internos `r8` a `r15`, o registo de instrucao `IR` e o estado
+            de interrupcao `INT`. Este painel ajuda a acompanhar o estado interno da CPU durante
+            a execucao de cada instrucao.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="tutorial-section">
+      <h2>Terminal e ecra</h2>
+      <div class="tutorial-grid">
+        <article class="box tutorial-card">
+          <h3>Terminal (E/S)</h3>
+          <p>
+            O terminal lateral mostra texto escrito pelo programa e permite enviar entrada.
+            O campo <strong>Entrada</strong> coloca caracteres no buffer do teclado e o botao
+            <strong>Enviar</strong> envia esse texto para o simulador.
+          </p>
+          <div class="tutorial-mini">
+            <div class="tutorial-terminal">(sem saida)</div>
+            <div class="tutorial-mini-row">
+              <span class="tutorial-button tutorial-button-wide">Entrada</span>
+              <span class="tutorial-button">Enviar</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="box tutorial-card">
+          <h3>Ecra</h3>
+          <p>
+            O ecra e uma visualizacao maior do terminal. E util para programas que escrevem
+            varias linhas ou usam o modo cursor. Pode ser mostrado pelo botao
+            <strong>Terminal</strong>.
+          </p>
+          <div class="tutorial-terminal">(sem saida)</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="tutorial-section">
+      <h2>LEDs, botoes e displays</h2>
+      <div class="tutorial-grid">
+        <article class="box tutorial-card">
+          <h3>LEDs e botoes mapeados</h3>
+          <p>
+            A linha <strong>FFF8</strong> representa LEDs de saida. Quando o programa escreve
+            nesse endereco, os bits ligados acendem. A linha <strong>FFF9</strong> representa
+            botoes ou switches de entrada que podem ser clicados pelo utilizador.
+          </p>
+          <div class="tutorial-mini tutorial-bits">
+            <div class="tutorial-bit-line">
+              <span class="tutorial-bit-label">FFF8</span>
+              <span class="tutorial-dot on"></span><span class="tutorial-dot"></span><span class="tutorial-dot on"></span><span class="tutorial-dot"></span>
+              <span class="tutorial-dot"></span><span class="tutorial-dot"></span><span class="tutorial-dot"></span><span class="tutorial-dot"></span>
+              <span class="tutorial-dot"></span><span class="tutorial-dot"></span><span class="tutorial-dot"></span><span class="tutorial-dot"></span>
+              <span class="tutorial-dot"></span><span class="tutorial-dot"></span><span class="tutorial-dot"></span><span class="tutorial-dot"></span>
+            </div>
+            <div class="tutorial-bit-line">
+              <span class="tutorial-bit-label">FFF9</span>
+              <span class="tutorial-switch"></span><span class="tutorial-switch on"></span><span class="tutorial-switch"></span><span class="tutorial-switch"></span>
+              <span class="tutorial-switch"></span><span class="tutorial-switch"></span><span class="tutorial-switch"></span><span class="tutorial-switch"></span>
+              <span class="tutorial-switch"></span><span class="tutorial-switch"></span><span class="tutorial-switch"></span><span class="tutorial-switch"></span>
+              <span class="tutorial-switch"></span><span class="tutorial-switch"></span><span class="tutorial-switch"></span><span class="tutorial-switch"></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="box tutorial-card">
+          <h3>Displays de 7 segmentos</h3>
+          <p>
+            Os displays usam os enderecos <strong>FFF0h</strong> a <strong>FFF3h</strong>.
+            Cada bit controla um segmento. Por exemplo, escrever `003Fh` liga os segmentos
+            necessarios para desenhar o numero 0.
+          </p>
+          <div class="tutorial-display-row">
+            <div class="tutorial-display">
+              <span class="tutorial-code">FFF0</span>
+              <div class="tutorial-seven">
+                <span class="tutorial-seg s-a on"></span>
+                <span class="tutorial-seg s-b on"></span>
+                <span class="tutorial-seg s-c on"></span>
+                <span class="tutorial-seg s-d on"></span>
+                <span class="tutorial-seg s-e on"></span>
+                <span class="tutorial-seg s-f on"></span>
+                <span class="tutorial-seg s-g"></span>
+              </div>
+              <span class="tutorial-code">00111111</span>
+            </div>
+            <div class="tutorial-display">
+              <span class="tutorial-code">FFF1</span>
+              <div class="tutorial-seven">
+                <span class="tutorial-seg s-a"></span>
+                <span class="tutorial-seg s-b on"></span>
+                <span class="tutorial-seg s-c on"></span>
+                <span class="tutorial-seg s-d"></span>
+                <span class="tutorial-seg s-e"></span>
+                <span class="tutorial-seg s-f"></span>
+                <span class="tutorial-seg s-g"></span>
+              </div>
+              <span class="tutorial-code">00000110</span>
+            </div>
+            <div class="tutorial-display">
+              <span class="tutorial-code">FFF2</span>
+              <div class="tutorial-seven">
+                <span class="tutorial-seg s-a on"></span>
+                <span class="tutorial-seg s-b on"></span>
+                <span class="tutorial-seg s-c"></span>
+                <span class="tutorial-seg s-d on"></span>
+                <span class="tutorial-seg s-e on"></span>
+                <span class="tutorial-seg s-f"></span>
+                <span class="tutorial-seg s-g on"></span>
+              </div>
+              <span class="tutorial-code">01011011</span>
+            </div>
+            <div class="tutorial-display">
+              <span class="tutorial-code">FFF3</span>
+              <div class="tutorial-seven">
+                <span class="tutorial-seg s-a on"></span>
+                <span class="tutorial-seg s-b on"></span>
+                <span class="tutorial-seg s-c on"></span>
+                <span class="tutorial-seg s-d on"></span>
+                <span class="tutorial-seg s-e"></span>
+                <span class="tutorial-seg s-f"></span>
+                <span class="tutorial-seg s-g on"></span>
+              </div>
+              <span class="tutorial-code">01001111</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="tutorial-section">
+      <h2>Memoria e pilha</h2>
+      <div class="tutorial-grid">
+        <article class="box tutorial-card">
+          <h3>Memoria P3</h3>
+          <p>
+            Mostra os valores guardados na memoria. Depois do <strong>Assemble</strong>,
+            as instrucoes e dados do programa ficam carregados neste painel como palavras
+            de 16 bits.
+          </p>
+          <p>
+            O botao <strong>Memoria</strong> abre uma janela onde se escolhe o intervalo
+            de enderecos mostrado. A opcao <strong>Automatico</strong> faz a zona visivel
+            aumentar quando o programa escreve fora do intervalo atual.
+          </p>
+        </article>
+
+        <article class="box tutorial-card">
+          <h3>Pilha</h3>
+          <p>
+            Mostra a zona usada pela pilha. O registo <strong>SP</strong> indica a posicao atual.
+            A pilha e alterada por instrucoes como <code>PUSH</code>, <code>POP</code>,
+            <code>CALL</code>, <code>RET</code> e interrupcoes.
+          </p>
+          <p>
+            O botao <strong>Pilha</strong> abre a mesma janela, mas aplicada ao intervalo da
+            pilha. Com <strong>Automatico</strong> ativo, a zona acompanha acessos da pilha
+            quando a execucao usa novos enderecos.
+          </p>
+        </article>
+
+        <article class="box tutorial-card tutorial-card-wide">
+          <h3>Esquema de cores na memoria e na pilha</h3>
+          <p>
+            A memoria e a pilha usam o mesmo sistema de cores para mostrar o que aconteceu
+            durante a execucao. Isto ajuda a perceber rapidamente que enderecos foram lidos,
+            escritos ou alterados no passo atual.
+          </p>
+          <img
+            class="tutorial-screenshot tutorial-screenshot-small"
+            src="imagens/cores-memoria-pilha.png"
+            alt="Exemplo de cores usadas nos valores da memoria e da pilha"
+          />
+          <div class="tutorial-color-legend">
+            <div class="tutorial-color-item">
+              <span class="tutorial-swatch tutorial-swatch-normal"></span>
+              <span>Valor normal: endereco sem destaque recente.</span>
+            </div>
+            <div class="tutorial-color-item">
+              <span class="tutorial-swatch tutorial-swatch-written">12</span>
+              <span>Texto verde: valor que ja foi escrito pelo programa.</span>
+            </div>
+            <div class="tutorial-color-item">
+              <span class="tutorial-swatch tutorial-swatch-write"></span>
+              <span>Fundo azul: endereco escrito na instrucao atual.</span>
+            </div>
+            <div class="tutorial-color-item">
+              <span class="tutorial-swatch tutorial-swatch-read"></span>
+              <span>Fundo amarelo: endereco lido na instrucao atual.</span>
+            </div>
+          </div>
+          <p>
+            Na pilha, estas cores tornam visiveis os efeitos de <code>PUSH</code>,
+            <code>POP</code>, <code>CALL</code>, <code>RET</code> e interrupcoes.
+            Na memoria principal, ajudam a identificar dados, instrucoes e zonas de E/S
+            alteradas pelo programa.
+          </p>
+        </article>
+
+        <article class="box tutorial-card">
+          <h3>Janela do botao Memoria</h3>
+          <div class="tutorial-dialog-preview" role="img" aria-label="Janela do botao Memoria">
+            <div class="tutorial-dialog-header">
+              <span>Memoria</span>
+              <span class="tutorial-dialog-close">x</span>
+            </div>
+            <div class="tutorial-dialog-body">
+              <label class="tutorial-dialog-field">
+                <span>Intervalo</span>
+                <span class="tutorial-dialog-input">0000-00FF</span>
+              </label>
+              <div class="tutorial-dialog-check">
+                <span class="tutorial-dialog-checkbox"></span>
+                <span>Automatico</span>
+              </div>
+              <div class="tutorial-dialog-actions">
+                <span class="tutorial-dialog-action">Cancelar</span>
+                <span class="tutorial-dialog-action">OK</span>
+              </div>
+            </div>
+          </div>
+          <p>
+            O intervalo deve ser escrito em hexadecimal no formato <strong>inicio-fim</strong>.
+            Por exemplo, <strong>0000-00FF</strong> mostra apenas essa zona da memoria.
+          </p>
+        </article>
+
+        <article class="box tutorial-card">
+          <h3>Janela do botao Pilha</h3>
+          <div class="tutorial-dialog-preview" role="img" aria-label="Janela do botao Pilha">
+            <div class="tutorial-dialog-header">
+              <span>Pilha</span>
+              <span class="tutorial-dialog-close">x</span>
+            </div>
+            <div class="tutorial-dialog-body">
+              <label class="tutorial-dialog-field">
+                <span>Intervalo</span>
+                <span class="tutorial-dialog-input">FD00-FDFF</span>
+              </label>
+              <div class="tutorial-dialog-check">
+                <span class="tutorial-dialog-checkbox"></span>
+                <span>Automatico</span>
+              </div>
+              <div class="tutorial-dialog-actions">
+                <span class="tutorial-dialog-action">Cancelar</span>
+                <span class="tutorial-dialog-action">OK</span>
+              </div>
+            </div>
+          </div>
+          <p>
+            Na pilha, o modo automatico e util quando se usam muitas chamadas, <code>PUSH</code>,
+            <code>POP</code> ou interrupcoes, porque evita que a zona visivel fique demasiado pequena.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer class="rodape-assinatura">
+    <span>Carlos Sousa</span>
+    <a href="https://github.com/Cas9005/processador-p3" target="_blank" rel="noopener noreferrer">Cas9005/processador-p3</a>
+  </footer>
+</body>
+</html>

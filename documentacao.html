@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentacao - Simulador P3</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="pagina-informativa">
+    <nav class="box pagina-nav" aria-label="Navegacao principal">
+      <a class="acao-topo-link" href="index.html">Simulador</a>
+      <a class="acao-topo-link" href="tutorial.html">Tutorial comandos</a>
+      <a class="acao-topo-link" href="toturial/tutorial-interface.html">Tutorial interface</a>
+      <a class="acao-topo-link" href="about.html">About</a>
+      <a class="acao-topo-link" href="roms.html">ROMs</a>
+    </nav>
+
+    <section class="box pagina-cabecalho">
+      <h1>Documentacao do Simulador P3</h1>
+      <p>
+        Esta pagina resume a sintaxe suportada, os grupos de instrucoes, as flags afetadas e os
+        enderecos de entrada/saida mapeados em memoria. Serve como apoio durante a escrita e teste
+        de programas Assembly no simulador.
+      </p>
+    </section>
+
+    <section class="box pagina-secao">
+      <h2>Fluxo de utilizacao</h2>
+      <ol class="pagina-lista-numerada">
+        <li>Escrever o programa no editor Assembly.</li>
+        <li>Carregar em <strong>Assemble</strong> para validar e montar o codigo.</li>
+        <li>Executar em modo continuo ou passo a passo.</li>
+        <li>Observar registos, flags, memoria, pilha, ciclos, programa e terminal.</li>
+      </ol>
+    </section>
+
+    <section class="box pagina-secao">
+      <h2>Flags</h2>
+      <table class="tabela-documentacao tabela-compacta">
+        <thead>
+          <tr>
+            <th>Flag</th>
+            <th>Significado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Z</td><td>Resultado igual a zero.</td></tr>
+          <tr><td>C</td><td>Carry ou borrow em operacoes aritmeticas.</td></tr>
+          <tr><td>N</td><td>Resultado negativo, considerando o bit de sinal.</td></tr>
+          <tr><td>O</td><td>Overflow aritmetico.</td></tr>
+          <tr><td>E</td><td>Estado global das interrupcoes.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="box pagina-secao">
+      <h2>Instrucoes sem argumentos</h2>
+      <table class="tabela-documentacao">
+        <thead>
+          <tr>
+            <th>Instrucao</th>
+            <th>Descricao</th>
+            <th>Flags</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>NOP</td><td>Nao altera o estado, apenas avanca a execucao.</td><td>-</td></tr>
+          <tr><td>ENI</td><td>Ativa interrupcoes.</td><td>E</td></tr>
+          <tr><td>DSI</td><td>Desativa interrupcoes.</td><td>E</td></tr>
+          <tr><td>STC</td><td>Coloca a flag Carry a 1.</td><td>C</td></tr>
+          <tr><td>CLC</td><td>Coloca a flag Carry a 0.</td><td>C</td></tr>
+          <tr><td>CMC</td><td>Inverte a flag Carry.</td><td>C</td></tr>
+          <tr><td>RET</td><td>Retorna de uma subrotina.</td><td>-</td></tr>
+          <tr><td>RTI</td><td>Retorna de uma interrupcao, restaurando o estado guardado.</td><td>E Z C N O</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="box pagina-secao">
+      <h2>Instrucoes com um argumento</h2>
+      <table class="tabela-documentacao">
+        <thead>
+          <tr>
+            <th>Instrucao</th>
+            <th>Formato</th>
+            <th>Descricao</th>
+            <th>Flags</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>NEG</td><td>NEG op</td><td>Troca o sinal do operando.</td><td>Z C N O</td></tr>
+          <tr><td>INC</td><td>INC op</td><td>Incrementa o operando.</td><td>Z C N O</td></tr>
+          <tr><td>DEC</td><td>DEC op</td><td>Decrementa o operando.</td><td>Z C N O</td></tr>
+          <tr><td>COM</td><td>COM op</td><td>Complemento bit a bit.</td><td>Z N</td></tr>
+          <tr><td>PUSH</td><td>PUSH op</td><td>Coloca o valor no topo da pilha.</td><td>-</td></tr>
+          <tr><td>POP</td><td>POP op</td><td>Retira o valor do topo da pilha.</td><td>-</td></tr>
+          <tr><td>INT</td><td>INT n</td><td>Gera a interrupcao indicada pela constante.</td><td>E Z C N O</td></tr>
+          <tr><td>RETN</td><td>RETN n</td><td>Retorna e remove n palavras adicionais da pilha.</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="box pagina-secao">
+      <h2>Instrucoes com dois argumentos</h2>
+      <table class="tabela-documentacao">
+        <thead>
+          <tr>
+            <th>Grupo</th>
+            <th>Instrucoes</th>
+            <th>Descricao</th>
+            <th>Flags comuns</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Aritmetica</td>
+            <td>ADD, ADDC, SUB, SUBB, MUL, DIV, CMP</td>
+            <td>Executam soma, subtracao, multiplicacao, divisao e comparacao.</td>
+            <td>Z C N O</td>
+          </tr>
+          <tr>
+            <td>Logica</td>
+            <td>TEST, AND, OR, XOR</td>
+            <td>Operacoes logicas entre registos, memoria ou constantes.</td>
+            <td>Z N</td>
+          </tr>
+          <tr>
+            <td>Movimento</td>
+            <td>MOV, MVBH, MVBL, XCH</td>
+            <td>Copiam, alteram bytes ou trocam valores entre operandos.</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>Shifts e rotacoes</td>
+            <td>SHR, SHL, SHRA, SHLA, ROR, ROL, RORC</td>
+            <td>Deslocam ou rodam bits do operando.</td>
+            <td>Z C N O</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="box pagina-secao">
+      <h2>Saltos e chamadas</h2>
+      <table class="tabela-documentacao">
+        <thead>
+          <tr>
+            <th>Instrucao</th>
+            <th>Descricao</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>JMP destino</td><td>Salto absoluto para label, registo, memoria ou PC.</td></tr>
+          <tr><td>CALL destino</td><td>Chama uma subrotina e guarda o retorno na pilha.</td></tr>
+          <tr><td>BR offset</td><td>Salto relativo usando constante ou label.</td></tr>
+          <tr><td>JMP.cond destino</td><td>Salto absoluto apenas se a condicao for verdadeira.</td></tr>
+          <tr><td>CALL.cond destino</td><td>Chamada condicional de subrotina.</td></tr>
+          <tr><td>BR.cond offset</td><td>Salto relativo condicional.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="box pagina-secao">
+      <h2>Condicoes</h2>
+      <table class="tabela-documentacao tabela-compacta">
+        <thead>
+          <tr>
+            <th>Condicao</th>
+            <th>Quando e usada</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Z / NZ</td><td>Zero / nao zero.</td></tr>
+          <tr><td>C / NC</td><td>Carry / sem carry.</td></tr>
+          <tr><td>N / NN</td><td>Negativo / nao negativo.</td></tr>
+          <tr><td>O / NO</td><td>Overflow / sem overflow.</td></tr>
+          <tr><td>P / NP</td><td>Positivo / nao positivo.</td></tr>
+          <tr><td>I / NI</td><td>Interrupcoes ativas / inativas.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="box pagina-secao">
+      <h2>Pseudo-instrucoes</h2>
+      <table class="tabela-documentacao">
+        <thead>
+          <tr>
+            <th>Diretiva</th>
+            <th>Funcao</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>ORIG valor</td><td>Define o endereco onde o codigo ou dados seguintes serao colocados.</td></tr>
+          <tr><td>EQU valor</td><td>Define uma constante simbolica.</td></tr>
+          <tr><td>WORD valor</td><td>Reserva uma palavra inicializada.</td></tr>
+          <tr><td>STR texto</td><td>Guarda uma cadeia de caracteres em memoria.</td></tr>
+          <tr><td>TAB n</td><td>Reserva n palavras em memoria.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="box pagina-secao">
+      <h2>Entrada/saida mapeada em memoria</h2>
+      <table class="tabela-documentacao">
+        <thead>
+          <tr>
+            <th>Endereco</th>
+            <th>Dispositivo</th>
+            <th>Funcao</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>FFF0h-FFF3h</td><td>Displays de 7 segmentos</td><td>Mostram valores enviados pelo programa.</td></tr>
+          <tr><td>FFF4h/FFF5h</td><td>LCD</td><td>Controlo e escrita de caracteres no LCD.</td></tr>
+          <tr><td>FFF6h/FFF7h</td><td>Timer</td><td>Valor e controlo do temporizador.</td></tr>
+          <tr><td>FFF8h</td><td>LEDs</td><td>Saida visual controlada pelo programa.</td></tr>
+          <tr><td>FFF9h</td><td>Switches</td><td>Entrada lida pelo programa.</td></tr>
+          <tr><td>FFFAh</td><td>PIC</td><td>Mascara e gestao de interrupcoes.</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="rodape-assinatura">
+    <span>Carlos Sousa</span>
+    <a href="https://github.com/Cas9005/processador-p3" target="_blank" rel="noopener noreferrer">Cas9005/processador-p3</a>
+  </footer>
+</body>
+</html>

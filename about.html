@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobre - Simulador P3</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="pagina-informativa">
+    <nav class="box pagina-nav" aria-label="Navegacao principal">
+      <a class="acao-topo-link" href="index.html">Simulador</a>
+      <a class="acao-topo-link" href="tutorial.html">Tutorial comandos</a>
+      <a class="acao-topo-link" href="toturial/tutorial-interface.html">Tutorial interface</a>
+      <a class="acao-topo-link" href="documentacao.html">Documentacao</a>
+      <a class="acao-topo-link" href="roms.html">ROMs</a>
+    </nav>
+
+    <section class="box pagina-cabecalho">
+      <h1>Sobre o Simulador P3</h1>
+      <p>
+        Este simulador foi desenvolvido para apoiar o estudo do processador P3 e da linguagem
+        Assembly usada em Arquitetura de Computadores. O objetivo principal e permitir que o
+        utilizador escreva, monte, execute e observe programas P3 de forma visual e controlada.
+      </p>
+    </section>
+
+    <section class="pagina-grelha">
+      <article class="box pagina-cartao">
+        <h2>Objetivo</h2>
+        <p>
+          A aplicacao procura tornar visivel o funcionamento interno do processador. Em vez de
+          mostrar apenas o resultado final, apresenta registos, memoria, pilha, flags, unidade de
+          controlo, programa montado e dispositivos de entrada/saida durante a execucao.
+        </p>
+      </article>
+
+      <article class="box pagina-cartao">
+        <h2>Publico-alvo</h2>
+        <p>
+          O simulador destina-se a estudantes que estao a aprender Assembly, organizacao de
+          computadores e execucao de instrucoes ao nivel da CPU. Tambem pode ser usado para testar
+          pequenos programas e compreender melhor os efeitos de cada instrucao.
+        </p>
+      </article>
+    </section>
+
+    <section class="box pagina-secao">
+      <h2>Funcionamento geral</h2>
+      <p>
+        O utilizador escreve o programa em Assembly no editor. Depois, o assembler analisa o codigo,
+        interpreta labels, constantes e pseudo-instrucoes, e carrega as palavras resultantes na
+        memoria simulada. A CPU executa essas instrucoes passo a passo ou em modo continuo,
+        atualizando os componentes visuais da interface.
+      </p>
+
+      <ol class="pagina-lista-numerada">
+        <li>O codigo Assembly e escrito no editor.</li>
+        <li>O assembler valida e converte o programa para memoria.</li>
+        <li>A CPU executa as instrucoes e atualiza o estado interno.</li>
+        <li>A interface mostra registos, flags, pilha, memoria, E/S e terminal.</li>
+      </ol>
+    </section>
+
+    <section class="box pagina-secao">
+      <h2>Funcionalidades principais</h2>
+      <div class="pagina-lista-colunas">
+        <ul>
+          <li>Execucao continua, passo a passo e reset.</li>
+          <li>Visualizacao dos registos gerais e registos internos da unidade de controlo.</li>
+          <li>Memoria e pilha com destaque das posicoes lidas e escritas.</li>
+          <li>Breakpoints para parar a execucao apos a instrucao marcada.</li>
+        </ul>
+        <ul>
+          <li>Contagem de ciclos de relogio por instrucao.</li>
+          <li>Suporte a dispositivos de E/S mapeados em memoria.</li>
+          <li>Mensagens de erro para problemas de parsing, montagem e execucao.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape-assinatura">
+    <span>Carlos Sousa</span>
+    <a href="https://github.com/Cas9005/processador-p3" target="_blank" rel="noopener noreferrer">Cas9005/processador-p3</a>
+  </footer>
+</body>
+</html>
