@@ -36,7 +36,7 @@ const P3_TERMINAL_COLUMNS = 80;
 const P3_TERMINAL_ROWS = 24;
 const P3_TERMINAL_BUFFER_LINES = 64;
 
-// Alias para não partir o resto do teu projeto
+
 const P3_TERM_CLEAR = P3_TERM_CTRL;
 
 function normalizarPalavra(valor) {
@@ -798,7 +798,7 @@ window.P3Memoria = {
   P3_TERMINAL_ROWS,
   P3_TERMINAL_BUFFER_LINES,
 
-  // alias de compatibilidade
+  
   P3_TERM_CLEAR
 };
 })();
